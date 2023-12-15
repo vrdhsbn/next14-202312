@@ -7,7 +7,12 @@
     "enabled": true,
     "ignore": [".next", "node_modules"],
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUndeclaredVariables": "error",
+        "noUnusedVariables": "error",
+        "useHookAtTopLevel": "error"
+      }
     }
   },
   "formatter": {
@@ -29,7 +34,8 @@
       "trailingComma": "all",
       "semicolons": "asNeeded",
       "arrowParentheses": "asNeeded"
-    }
+    },
+    "globals": ["$", "_", "React"]
   },
   "json": {
     "parser": { "allowComments": true },
