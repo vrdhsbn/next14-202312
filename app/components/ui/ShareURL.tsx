@@ -1,28 +1,35 @@
 'use client'
 import { HStack, styled } from '@/styled-system/jsx'
+import { useEffect, useState } from 'react'
 
 export const ShareURL = () => {
-  // ブラウザではちゃんと取得できているけど、コンソールにはdocumentが定義されていないとエラーが出る
-  const url = document.location as unknown as string
+  const [url, setUrl] = useState('')
+
+  useEffect(() => {
+    setUrl(document.location as unknown as string)
+  }, [])
 
   return (
     <HStack>
       <styled.input
         type='text'
         value={`${url}`}
-        w={'240px'}
+        w={'300px'}
         p={'8px'}
         border={'solid 1px #ccc'}
       />
-      <button
+      <styled.button
         type='button'
+        color={'#3f3fdf'}
+        fontWeight={700}
+        cursor={'pointer'}
         onClick={() => {
           navigator.clipboard.writeText(url)
           console.log('コピーしました！')
         }}
       >
         COPY
-      </button>
+      </styled.button>
     </HStack>
   )
 }

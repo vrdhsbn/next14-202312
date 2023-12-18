@@ -22,10 +22,6 @@ export const SearchResults = ({ results }: { results: booksType }) => {
       <p>検索結果：{results.totalItems}件</p>
       <div>
         {items.map(item => {
-          const isbn = item.volumeInfo.industryIdentifiers[1]
-            ? item.volumeInfo.industryIdentifiers[1].identifier
-            : item.volumeInfo.industryIdentifiers[0].identifier
-
           return (
             <styled.div
               key={item.id}
@@ -49,7 +45,6 @@ export const SearchResults = ({ results }: { results: booksType }) => {
                     ? item.volumeInfo.authors.join('、')
                     : 'N/A'}
                 </p>
-                <p>ISBN: {isbn}</p>
                 <Button onClick={() => handleClick(item.id)}>
                   この本を追加する
                 </Button>

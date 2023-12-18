@@ -1,13 +1,13 @@
-import { Container, HStack, VStack } from '@/styled-system/jsx'
+import { Center, Container, HStack, VStack } from '@/styled-system/jsx'
 import { BookItem } from '../components/models/BookItem'
 import { ShareURL } from '../components/ui/ShareURL'
 import supabase from '../utils/supabase'
 
-const MyList = async ({ params }: { params: { id: string } }) => {
+const MyList = async ({ params }: { params: { hash: string } }) => {
   const { data, error } = await supabase
     .from('books')
     .select('*')
-    .match({ id: params.id })
+    .match({ hash: params.hash })
   if (error) {
     console.log(error)
   }
@@ -17,14 +17,16 @@ const MyList = async ({ params }: { params: { id: string } }) => {
 
     return (
       <Container maxWidth={'960px'}>
-        <p>おすすめリスト ID: {params.id}</p>
+        <p>おすすめリスト ID: {params.hash}</p>
         <HStack
           gap={'8px'}
           mt={'16px'}
           justifyContent={'center'}
           alignItems={'center'}
         >
-          {books.map(book => (
+          {books.map((
+            book: string,
+          ) => (
             <BookItem key={book} id={book} />
           ))}
         </HStack>
@@ -32,6 +34,7 @@ const MyList = async ({ params }: { params: { id: string } }) => {
           <p>このリストをシェアしよう</p>
           <ShareURL />
         </VStack>
+        <Center mt={'24px'}><a href="/">トップに戻る</a></Center>
       </Container>
     )
   }
