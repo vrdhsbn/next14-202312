@@ -10,17 +10,20 @@ const MyList = async ({ params }: { params: { hash: string } }) => {
     .match({ hash: params.hash })
   if (error) {
     console.log(error)
+    return <p>データベースにアクセスできません</p>
   }
 
   if (data) {
-    const books = data[0].books_id
+    const books = data[0]?.books_id
+
+    if (!books) return <p>データが存在しません</p>
 
     return (
       <Container maxWidth={'960px'}>
-        <p>おすすめリスト ID: {params.hash}</p>
+        <Center mt={'24px'} fontSize={"20px"} fontWeight={700}>{data[0].list_title}</Center>
         <HStack
           gap={'8px'}
-          mt={'16px'}
+          mt={'24px'}
           justifyContent={'center'}
           alignItems={'center'}
         >
@@ -31,7 +34,7 @@ const MyList = async ({ params }: { params: { hash: string } }) => {
           ))}
         </HStack>
         <VStack mt={'32px'}>
-          <p>このリストをシェアしよう</p>
+          <p>このリストをシェアできます</p>
           <ShareURL />
         </VStack>
         <Center mt={'24px'}><a href="/">トップに戻る</a></Center>

@@ -12,7 +12,14 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        toastFadeIn: {
+          '0%': { opacity: 0, transform: 'translateX(4px)' },
+          '100%': { opacity: 1, transform: 'translateX(0)' },
+        },
+      },
+    },
   },
 
   // The output directory for your css system

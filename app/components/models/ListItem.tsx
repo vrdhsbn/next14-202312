@@ -28,8 +28,6 @@ export const ListItem = ({ id }: { id: string }) => {
 
   if (!bookInfo) return
 
-  console.log(bookInfo)
-
   return (
     <HStack justifyContent={'space-between'} alignItems={'center'}>
       <HStack>

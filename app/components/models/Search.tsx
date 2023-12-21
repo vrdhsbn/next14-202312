@@ -7,7 +7,7 @@ type categoryType = 'inauthor:' | 'intitle:'
 
 export const Search = () => {
   const [text, setText] = useState<string>('')
-  const [category, setCategory] = useState<categoryType>('inauthor:')
+  const [category, setCategory] = useState<categoryType>('intitle:')
   const [results, setResults] = useState(null)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,7 +18,7 @@ export const Search = () => {
       `https://www.googleapis.com/books/v1/volumes?q=${category}${text}&printType=books&maxResults=3&startIndex=0`,
     ).then(res => res.json())
     console.log('done.')
-    console.log(searchResults)
+    // console.log(searchResults)
     setResults(searchResults)
   }
 
@@ -31,7 +31,7 @@ export const Search = () => {
       <styled.h1 fontSize={'20px'} fontWeight={700}>
         おすすめ書籍リスト作成
       </styled.h1>
-      <styled.p mt={'16px'}>著者名またはタイトルで検索</styled.p>
+      <styled.p mt={'16px'}>タイトルまたは著者名で検索</styled.p>
       <form onSubmit={handleSubmit}>
         <styled.input
           type='text'
@@ -46,23 +46,23 @@ export const Search = () => {
             <input
               type='radio'
               name='category'
-              id='author'
-              value='inauthor:'
-              onChange={e => handleChange(e)}
-              checked={category === 'inauthor:' ? true : false}
-            />
-            <label htmlFor='author'>著者名</label>
-          </HStack>
-          <HStack gap={'4px'}>
-            <input
-              type='radio'
-              name='category'
               id='title'
               value='intitle:'
               onChange={e => handleChange(e)}
               checked={category === 'intitle:' ? true : false}
             />
             <label htmlFor='title'>タイトル</label>
+          </HStack>
+          <HStack gap={'4px'}>
+            <input
+              type='radio'
+              name='category'
+              id='author'
+              value='inauthor:'
+              onChange={e => handleChange(e)}
+              checked={category === 'inauthor:' ? true : false}
+            />
+            <label htmlFor='author'>著者名</label>
           </HStack>
         </HStack>
       </form>
