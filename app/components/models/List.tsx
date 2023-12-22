@@ -1,33 +1,20 @@
 import { booksAtom } from '@/app/atoms/booksAtom'
-import { generateRandomStrings } from '@/app/utils/generateRandomStrings'
-import supabase from '@/app/utils/supabase'
+import { listTitleAtom } from '@/app/atoms/listTitleAtom'
+import { insertRecord } from '@/app/utils/insertRecord'
 import { Box, VStack, styled } from '@/styled-system/jsx'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import { Button } from '../ui/Button'
 import { ListItem } from './ListItem'
 
 export const List = () => {
-  const [listTitle, setListTitle] = useState('')
+  const [listTitle, setListTitle] = useAtom(listTitleAtom)
   const books = useAtomValue(booksAtom)
   const router = useRouter()
 
   const handleClick = async () => {
-    // URL用の文字列を生成
-    const hash = generateRandomStrings(8)
-
-    const { data, error } = await supabase
-      .from('books')
-      .insert({ list_title: listTitle, books_id: books, hash: hash })
-      .select()
-    if (error) {
-      console.log(error)
-    }
-    if (data) {
-      console.log(data[0])
-      router.push(`/${data[0].hash}`)
-    }
+    const hash = await insertRecord(listTitle, books)
+    router.push(`/${hash}`)
   }
 
   return (

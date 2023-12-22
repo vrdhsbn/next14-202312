@@ -8,6 +8,7 @@ const MyList = async ({ params }: { params: { hash: string } }) => {
     .from('books')
     .select('*')
     .match({ hash: params.hash })
+
   if (error) {
     console.log(error)
     return <p>データベースにアクセスできません</p>

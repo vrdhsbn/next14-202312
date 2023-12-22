@@ -13,6 +13,5 @@ export type bookType = {
       thumbnail: string
       smallThumbnail: string
     }
-    // industryIdentifiers: { identifier: string }[]
   }
 }

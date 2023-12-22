@@ -19,6 +19,7 @@ export const ShareURL = () => {
         w={'300px'}
         p={'8px'}
         border={'solid 1px #ccc'}
+        readOnly
       />
       <Popover.Root positioning={{ placement: 'top' }}>
         <Popover.Trigger asChild>
