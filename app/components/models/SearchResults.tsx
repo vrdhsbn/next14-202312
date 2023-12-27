@@ -1,5 +1,6 @@
 import { booksAtom } from '@/app/atoms/booksAtom'
 import { booksType } from '@/app/types/booksType'
+import { registerBook } from '@/app/utils/registerBook'
 import { css } from '@/styled-system/css'
 import { Box, VStack, styled } from '@/styled-system/jsx'
 import { Toast, createToaster } from '@ark-ui/react'
@@ -8,7 +9,7 @@ import { Button } from '../ui/Button'
 
 export const SearchResults = ({ results }: { results: booksType }) => {
   const items = results.items
-  const [books, setBooks] = useAtom(booksAtom)
+  const [books, setBooks] = useAtom<Array<string>>(booksAtom)
 
   const [Toaster, toast] = createToaster({
     placement: 'bottom-end',
@@ -28,18 +29,16 @@ export const SearchResults = ({ results }: { results: booksType }) => {
   })
 
   const handleClick = (id: string) => {
-    if (books.length === 3) {
-      toast.create({
-        title: 'Error!',
-        description: '登録できる書籍は3冊までです',
-      })
-    } else if (books.includes(id)) {
-      toast.create({
-        title: 'Error!',
-        description: 'その書籍はすでに追加されています',
-      })
-    } else {
-      setBooks([...books, id])
+    try {
+      registerBook(id, books, setBooks)
+    } catch (error) {
+      // Errorのインスタンスであるかの判定が必要。これがないとunknownとして扱われる。
+      if (error instanceof Error) {
+        toast.create({
+          title: 'Error!',
+          description: error.message,
+        })
+      }
     }
   }
 
@@ -73,7 +72,7 @@ export const SearchResults = ({ results }: { results: booksType }) => {
                       : 'N/A'}
                   </p>
                   <Button onClick={() => handleClick(item.id)}>
-                    この本を追加する
+                    リストに追加する
                   </Button>
                 </VStack>
               </styled.div>

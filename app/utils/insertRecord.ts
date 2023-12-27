@@ -15,7 +15,6 @@ export const insertRecord = async (listTitle: string, books: Array<string>) => {
   }
 
   if (data) {
-    console.log(data[0])
     return data[0].hash
   }
 }

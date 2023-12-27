@@ -8,7 +8,7 @@ export const ShareURL = () => {
   const [url, setUrl] = useState('')
 
   useEffect(() => {
-    setUrl(document.location as unknown as string)
+    setUrl(window.location.href)
   }, [])
 
   return (

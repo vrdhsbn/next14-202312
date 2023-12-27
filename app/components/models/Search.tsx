@@ -3,11 +3,11 @@ import { HStack, styled } from '@/styled-system/jsx'
 import { useState } from 'react'
 import { SearchResults } from './SearchResults'
 
-type categoryType = 'inauthor:' | 'intitle:'
+type categoryType = 'inauthor' | 'intitle'
 
 export const Search = () => {
   const [text, setText] = useState<string>('')
-  const [category, setCategory] = useState<categoryType>('intitle:')
+  const [category, setCategory] = useState<categoryType>('intitle')
   const [results, setResults] = useState(null)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -15,7 +15,7 @@ export const Search = () => {
     console.log('fetching...')
     // 取得数と検索時のオフセットを指定できる。あとで調整する。
     const searchResults = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${category}${text}&printType=books&maxResults=3&startIndex=0`,
+      `https://www.googleapis.com/books/v1/volumes?q=${category}:${text}&printType=books&maxResults=3&startIndex=0`,
     ).then(res => res.json())
     console.log('done.')
     // console.log(searchResults)
@@ -47,9 +47,9 @@ export const Search = () => {
               type='radio'
               name='category'
               id='title'
-              value='intitle:'
+              value='intitle'
               onChange={e => handleChange(e)}
-              checked={category === 'intitle:' ? true : false}
+              checked={category === 'intitle' ? true : false}
             />
             <label htmlFor='title'>タイトル</label>
           </HStack>
@@ -58,9 +58,9 @@ export const Search = () => {
               type='radio'
               name='category'
               id='author'
-              value='inauthor:'
+              value='inauthor'
               onChange={e => handleChange(e)}
-              checked={category === 'inauthor:' ? true : false}
+              checked={category === 'inauthor' ? true : false}
             />
             <label htmlFor='author'>著者名</label>
           </HStack>
