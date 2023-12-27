@@ -44,7 +44,7 @@ export const SearchResults = ({ results }: { results: booksType }) => {
 
   return (
     <Box mt={'16px'}>
-      <p>検索結果：{results.totalItems}件</p>
+      <p>検索結果：{results.totalItems}件（最大10件のみ表示しています）</p>
       <Box mt={'8px'}>
         {items ? (
           items.map(item => {

@@ -13,9 +13,8 @@ export const Search = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log('fetching...')
-    // 取得数と検索時のオフセットを指定できる。あとで調整する。
     const searchResults = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${category}:${text}&printType=books&maxResults=3&startIndex=0`,
+      `https://www.googleapis.com/books/v1/volumes?q=${category}:${text}&printType=books&maxResults=10&startIndex=0`,
     ).then(res => res.json())
     console.log('done.')
     // console.log(searchResults)
